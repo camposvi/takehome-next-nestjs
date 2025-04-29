@@ -1,40 +1,43 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgres:latest
     container_name: postgres_container
+    restart: always
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - '5432:5432'
-    networks:
-      - app-network
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
     env_file:
-      - .env
+      - ./.env
 
-  app:
-    build: .
+  server:
+    build:
+      context: ./
     container_name: nestjs_container
-    command: npm run start:dev
-    volumes:
-      - .:/app
+    restart: always
+    command: sh -c "npm install && until nc -z postgres 5432; do sleep 1; done && npm run start:dev"
     ports:
-      - 3000:3000
+      - '3000:3000'
     depends_on:
       - postgres
     networks:
       - app-network
     environment:
-      - DB_HOST=postgres # Use "postgres" como o nome do serviço do banco de dados
+      - DB_HOST=postgres
       - DB_PORT=5432
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     env_file:
-      - .env
+      - ./.env
 
 networks:
   app-network:
