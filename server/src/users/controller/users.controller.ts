@@ -4,37 +4,44 @@ import {
   Post,
   Body,
   Param,
-  Put,
+  Patch,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from '../service/users.service';
-import { CreateUserDto } from '../dto/create-user-dto';
-
+import { CreateUserDTO } from '../dto/create-user-dto';
+import { UpdateUserDTO } from '../dto/update-user-dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() createUserDTO: CreateUserDTO) {
+    return this.usersService.create(createUserDTO);
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
-    return this.usersService.update(id, createUserDto);
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  update(@Param('id') id: string, @Body() updateUserDTO: UpdateUserDTO) {
+    return this.usersService.update(id, updateUserDTO);
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.OK)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
