@@ -15,8 +15,13 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
+<<<<<<< HEAD
     it('should return "Hello World!"', () => {
       expect(appController.getHello()).toBe('Hello World!');
+=======
+    it('should return "Api is running!"', () => {
+      expect(appController.getStatus()).toBe('Api is running!');
+>>>>>>> server-development
     });
   });
 });
