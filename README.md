@@ -1,124 +1,396 @@
 # takehome-next-nestjs
 📌 Take-home Assignment – Desenvolvimento Fullstack com Next.js e NestJS
-Requisitos
-Docker (se usar Docker)
+Este repositório contém dois projetos principais: o **Server** (backend) e o **Client** (frontend). Este guia explica como configurar e executar ambos.
 
-Node.js (para rodar sem Docker)
+---
 
-PostgreSQL (para o banco de dados)
+## Estrutura do Projeto
 
-Redis (para cache)
+- **`server/`**: Contém o backend desenvolvido com [NestJS](https://nestjs.com/).
+- **`client/`**: Contém o frontend desenvolvido com [Next.js](https://nextjs.org/).
 
-Instalação e Execução
-Backend (NestJS)
-Instalar Dependências
+---
 
-Navegue até a pasta do backend e instale as dependências:
+## Pré-requisitos
 
-bash
-Copy
-Edit
-cd backend
-npm install
-Configuração das Variáveis de Ambiente
+Certifique-se de ter os seguintes softwares instalados:
 
-Crie o arquivo .env no diretório do backend com o seguinte conteúdo:
+- [Node.js](https://nodejs.org/) (versão 18 ou superior recomendada)
+- [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js)
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) (opcional, mas recomendado para rodar serviços como banco de dados e cache)
 
-env
-Copy
-Edit
-PORT=3001
+---
+
+## Configuração do Ambiente
+
+### 1. Clone o Repositório
+
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd takehome-next-nestjs
+2. Instale as Dependências
+Para o Server:
+Para o Client:
+3. Configure as Variáveis de Ambiente
+Server:
+No diretório server, o arquivo .env já está configurado com valores padrão. Certifique-se de que as variáveis de ambiente estão corretas:
+
+PORT=3000
+
+# PostgreSQL
 DB_HOST=postgres
 DB_PORT=5432
 DB_USER=admin
 DB_PASSWORD=postgres
 DB_NAME=challenge-db
+
+# Redis
 REDIS_HOST=redis
 REDIS_PORT=6379
-Rodar o Backend
 
-Para rodar o backend, utilize o comando abaixo dentro da pasta do backend:
 
-bash
-Copy
-Edit
-npm run start
-O servidor backend será iniciado em http://localhost:3001.
 
-Frontend (Next.js)
-Instalar Dependências
+Executando o Projeto
+Usando Docker Compose (Recomendado)
+Suba os serviços com Docker Compose
+No diretório raiz do projeto:
+  docker-compose up --build
 
-Navegue até a pasta do frontend e instale as dependências:
+Isso irá iniciar o backend (Server), o banco de dados PostgreSQL e o Redis.
 
-bash
-Copy
-Edit
-cd frontend
-npm install
-Configuração das Variáveis de Ambiente
+Acesse as aplicações:
 
-Crie o arquivo .env no diretório do frontend com o seguinte conteúdo:
+Frontend (Client): http://localhost:3001
+Backend (Server): http://localhost:3000
+Executando Manualmente (Sem Docker)
+Server:
+Certifique-se de que o PostgreSQL e o Redis estão rodando localmente ou em um ambiente acessível.
 
-env
-Copy
-Edit
-NEXT_PUBLIC_API_URL=http://localhost:3001
-Rodar o Frontend
+Atualize as variáveis de ambiente no arquivo .env para apontar para os serviços configurados.
 
-Para rodar o frontend, utilize o comando abaixo dentro da pasta do frontend:
+Inicie o servidor:
+cd server
+npm run start:dev
+O servidor estará disponível em http://localhost:3000.
 
-bash
-Copy
-Edit
+Client:
+Certifique-se de que o backend (Server) está rodando.
+
+Inicie o frontend:
+cd client
 npm run dev
-O servidor frontend será iniciado em http://localhost:3000.
+O frontend estará disponível em http://localhost:3001.
 
-Usando Docker (Opcional para Backend)
-Se preferir usar Docker para o backend, pode usar o arquivo docker-compose.yml.
+Testes
+Server:
+Testes Unitários:
+cd server
+npm run test
+Testes End-to-End:
+npm run test:e2e
+Cobertura de Testes:
 
-Configurar Docker
 
-O arquivo docker-compose.yml já está configurado para subir o backend com o PostgreSQL e Redis. Para rodar o Docker, execute:
+Problemas Comuns
+Erro de conexão com o banco de dados: Certifique-se de que o PostgreSQL está rodando e as variáveis de ambiente estão configuradas corretamente.
+Porta em uso: Verifique se as portas 3000 (Server) ou 3001 (Client) já estão sendo usadas por outro processo.
+Recursos Adicionais
+camposvi: gere um readme ensinando a rodar o projeto server
 
-bash
-Copy
-Edit
-docker-compose up --build
-Esse comando vai construir as imagens e iniciar o backend e os serviços auxiliares (PostgreSQL e Redis).
+Workspace: Collecting workspace information```md
+# Como Rodar o Projeto Server
 
-Acessar os Contêineres
+Este guia explica como configurar e executar o projeto NestJS localizado na pasta `server`.
 
-O backend estará rodando em http://localhost:3001.
+## Pré-requisitos
 
-O frontend estará rodando em http://localhost:3000.
+Certifique-se de ter os seguintes softwares instalados:
 
-O PostgreSQL estará rodando na porta 5432.
+- [Node.js](https://nodejs.org/) (versão 18 ou superior recomendada)
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) (para rodar os serviços de banco de dados e cache)
+- [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js)
 
-O Redis estará rodando na porta 6379.
+## Configuração do Ambiente
 
-Parar os Contêineres
+1. **Clone o repositório** (se ainda não o fez):
 
-Para parar os contêineres, use o seguinte comando:
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd takehome-next-nestjs/server
+   ```
 
-bash
-Copy
-Edit
-docker-compose down
-Estrutura das Rotas
-Backend (NestJS)
-GET /users: Retorna todos os usuários.
+2. **Instale as dependências**:
 
-GET /users/:id: Retorna um usuário específico pelo ID.
+   ```bash
+   npm install
+   ```
 
-POST /users: Cria um novo usuário.
+3. **Configure as variáveis de ambiente**:
 
-PUT /users/:id: Atualiza um usuário existente pelo ID.
+   O arquivo `.env` já está configurado com valores padrão. Certifique-se de que as variáveis de ambiente no arquivo `.env` estão corretas para o seu ambiente. Por exemplo:
 
-DELETE /users/:id: Deleta um usuário pelo ID.
+   ```env
+   PORT=3000
+   DB_HOST=postgres
+   DB_PORT=5432
+   DB_USER=admin
+   DB_PASSWORD=postgres
+   DB_NAME=challenge-db
+   REDIS_HOST=redis
+   REDIS_PORT=6379
+   ```
 
-Frontend (Next.js)
-Página inicial: Lista todos os usuários.
+## Executando o Projeto
 
-Página de criação: Formulário para criar um novo usuário.
+### Usando Docker Compose
 
-Página de edição: Formulário para editar um usuário existente.
+1. **Suba os serviços com Docker Compose**:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   Isso irá iniciar o servidor NestJS, o banco de dados PostgreSQL e o Redis.
+
+2. **Acesse a aplicação**:
+
+   O servidor estará disponível em [http://localhost:3000](http://localhost:3000).
+
+### Executando Localmente (Sem Docker)
+
+1. **Certifique-se de que o PostgreSQL e o Redis estão rodando**:
+
+   - Configure o banco de dados PostgreSQL e o Redis localmente ou em um ambiente acessível.
+   - Atualize as variáveis de ambiente no arquivo .env para apontar para os serviços configurados.
+
+2. **Inicie o servidor em modo de desenvolvimento**:
+
+   ```bash
+   npm run start:dev
+   ```
+
+   O servidor estará disponível em [http://localhost:3000](http://localhost:3000).
+
+## Testes
+
+### Testes Unitários
+
+Execute os testes unitários com o comando:
+
+```bash
+npm run test
+```
+
+### Testes End-to-End
+
+Execute os testes end-to-end com o comando:
+
+```bash
+npm run test:e2e
+```
+
+### Cobertura de Testes
+
+Para gerar um relatório de cobertura de testes:
+
+```bash
+npm run test:cov
+```
+
+## Estrutura do Projeto
+
+- **`src/`**: Contém o código-fonte principal.
+- **`test/`**: Contém os testes end-to-end.
+- **`docker-compose.yml`**: Configuração do Docker Compose para o ambiente de desenvolvimento.
+- **`.env`**: Arquivo de configuração de variáveis de ambiente.
+
+## Problemas Comuns
+
+- **Erro de conexão com o banco de dados**: Certifique-se de que o PostgreSQL está rodando e as variáveis de ambiente estão configuradas corretamente.
+- **Porta em uso**: Verifique se a porta `3000` já está sendo usada por outro processo.
+
+## Recursos Adicionais
+
+- [Documentação do NestJS](https://docs.nestjs.com/)
+- [Documentação do Docker Compose](https://docs.docker.com/compose/)
+
+
+camposvi: gere um readme para o projeto inteiro server e client
+
+GitHub Copilot: ```md
+# Guia de Configuração e Execução do Projeto
+
+Este repositório contém dois projetos principais: o **Server** (backend) e o **Client** (frontend). Este guia explica como configurar e executar ambos.
+
+---
+
+## Estrutura do Projeto
+
+- **`server/`**: Contém o backend desenvolvido com [NestJS](https://nestjs.com/).
+- **`client/`**: Contém o frontend desenvolvido com [Next.js](https://nextjs.org/).
+
+---
+
+## Pré-requisitos
+
+Certifique-se de ter os seguintes softwares instalados:
+
+- [Node.js](https://nodejs.org/) (versão 18 ou superior recomendada)
+- [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js)
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) (opcional, mas recomendado para rodar serviços como banco de dados e cache)
+
+---
+
+## Configuração do Ambiente
+
+### 1. Clone o Repositório
+
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd takehome-next-nestjs
+```
+
+### 2. Instale as Dependências
+
+#### Para o Server:
+
+```bash
+cd server
+npm install
+```
+
+#### Para o Client:
+
+```bash
+cd ../client
+npm install
+```
+
+### 3. Configure as Variáveis de Ambiente
+
+#### Server:
+
+No diretório `server`, o arquivo `.env` já está configurado com valores padrão. Certifique-se de que as variáveis de ambiente estão corretas:
+
+```properties
+PORT=3000
+
+# PostgreSQL
+DB_HOST=postgres
+DB_PORT=5432
+DB_USER=admin
+DB_PASSWORD=postgres
+DB_NAME=challenge-db
+
+# Redis
+REDIS_HOST=redis
+REDIS_PORT=6379
+```
+
+#### Client:
+
+No diretório `client`, crie um arquivo `.env.local` (se ainda não existir) e configure as variáveis de ambiente. Exemplo:
+
+```properties
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
+
+---
+
+## Executando o Projeto
+
+### Usando Docker Compose (Recomendado)
+
+1. **Suba os serviços com Docker Compose**:
+
+   No diretório raiz do projeto:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   Isso irá iniciar o backend (Server), o frontend (Client), o banco de dados PostgreSQL e o Redis.
+
+2. **Acesse as aplicações**:
+
+   - **Frontend (Client)**: [http://localhost:3001](http://localhost:3001)
+   - **Backend (Server)**: [http://localhost:3000](http://localhost:3000)
+
+---
+
+### Executando Manualmente (Sem Docker)
+
+#### Server:
+
+1. Certifique-se de que o PostgreSQL e o Redis estão rodando localmente ou em um ambiente acessível.
+2. Atualize as variáveis de ambiente no arquivo .env para apontar para os serviços configurados.
+3. Inicie o servidor:
+
+   ```bash
+   cd server
+   npm run start:dev
+   ```
+
+   O servidor estará disponível em [http://localhost:3000](http://localhost:3000).
+
+#### Client:
+
+1. Certifique-se de que o backend (Server) está rodando.
+2. Inicie o frontend:
+
+   ```bash
+   cd client
+   npm run dev
+   ```
+
+   O frontend estará disponível em [http://localhost:3001](http://localhost:3001).
+
+---
+
+## Testes
+
+### Server:
+
+- **Testes Unitários**:
+
+  ```bash
+  cd server
+  npm run test
+  ```
+
+- **Testes End-to-End**:
+
+  ```bash
+  npm run test:e2e
+  ```
+
+- **Cobertura de Testes**:
+
+  ```bash
+  npm run test:cov
+  ```
+
+### Client:
+
+- **Testes Unitários**:
+
+  ```bash
+  cd client
+  npm run test
+  ```
+
+---
+
+## Problemas Comuns
+
+- **Erro de conexão com o banco de dados**: Certifique-se de que o PostgreSQL está rodando e as variáveis de ambiente estão configuradas corretamente.
+- **Porta em uso**: Verifique se as portas `3000` (Server) ou `3001` (Client) já estão sendo usadas por outro processo.
+
+---
+
+## Recursos Adicionais
+
+- [Documentação do NestJS](https://docs.nestjs.com/)
+- [Documentação do Next.js](https://nextjs.org/docs)
+- [Documentação do Docker Compose](https://docs.docker.com/compose/)
+
