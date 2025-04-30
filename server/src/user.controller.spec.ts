@@ -1,8 +1,6 @@
-// test/users.controller.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from '../src/users/controller/users.controller';
 import { UsersService } from '../src/users/service/users.service';
-import { hashPassword } from '../src/utils/bcrypt';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -11,22 +9,22 @@ describe('UsersController', () => {
   const mockUsersService = {
     create: jest.fn().mockResolvedValue({
       id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
+      name: 'German Cano',
+      email: 'gcano@flu.com',
     }),
     findOne: jest.fn().mockResolvedValue({
       id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
+      name: 'Vinicius C',
+      email: 'vcamposr@gmail.com',
     }),
     findAll: jest.fn().mockResolvedValue([
-      { id: 1, name: 'John Doe', email: 'john@example.com' },
-      { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
+      { id: 1, name: 'Vinicius C', email: 'vcamposr@gmail.com' },
+      { id: 2, name: 'Bruno silva', email: 'bsilva@ig.com' },
     ]),
     update: jest.fn().mockResolvedValue({
       id: 1,
-      name: 'Updated Name',
-      email: 'updated@example.com',
+      name: 'Jhon Arias',
+      email: 'jhonarias@co.com',
     }),
     remove: jest.fn().mockResolvedValue({}),
   };
@@ -43,15 +41,15 @@ describe('UsersController', () => {
 
   it('should create a user', async () => {
     const dto = {
-      name: 'John Doe',
-      email: 'john@example.com',
+      name: 'German Cano',
+      email: 'gcano@flu.com',
       password: '123456',
     };
     const result = await controller.create(dto);
     expect(result).toEqual({
       id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
+      name: 'German Cano',
+      email: 'gcano@flu.com',
     });
     expect(service.create).toHaveBeenCalledWith(dto);
   });
@@ -61,8 +59,8 @@ describe('UsersController', () => {
     const result = await controller.findOne(id);
     expect(result).toEqual({
       id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
+      name: 'Vinicius C',
+      email: 'vcamposr@gmail.com',
     });
     expect(service.findOne).toHaveBeenCalledWith('1');
   });
@@ -75,16 +73,16 @@ describe('UsersController', () => {
 
   it('should update a user', async () => {
     const dto = {
-      name: 'Updated Name',
-      email: 'updated@example.com',
+      name: 'Paulo Henrique',
+      email: 'phenrique@example.com',
       password: '123456',
     };
     const id = '1';
     const result = await controller.update(id, dto);
     expect(result).toEqual({
       id: 1,
-      name: 'Updated Name',
-      email: 'updated@example.com',
+      name: 'Jhon Arias',
+      email: 'jhonarias@co.com',
     });
     expect(service.update).toHaveBeenCalledWith('1', dto);
   });
