@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserDTO } from '../dto/create-user-dto';
 import { UpdateUserDTO } from '../dto/update-user-dto';
-import { hashPassword } from 'src/utils/bcrypt';
+import { hashPassword } from '../../utils/bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
